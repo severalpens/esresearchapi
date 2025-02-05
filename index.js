@@ -7,7 +7,7 @@ const PORT = 5000;
 
 const { Client } = require('@elastic/elasticsearch');
 const client = new Client({
-    node: 'http://localhost:9200',
+    node: process.env.ELASTICSEARCH_URL,
     auth: {
         apiKey: process.env.ELASTIC_API_KEY
     }
