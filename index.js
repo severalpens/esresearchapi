@@ -14,6 +14,7 @@ const client = new Client({
 });
 
 
+
 app.use(cors()); // Enable CORS for all origins (you can restrict it later)
 app.use(express.json()); // Parse incoming JSON requests
 
