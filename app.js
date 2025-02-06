@@ -24,8 +24,17 @@ const client = new Client({
 });
 
 var app = express();
-app.use(cors()); // Enable CORS for all origins (you can restrict it later)
+const corsOptions = {
+    origin: [
+        'https://gray-smoke-064726800.4.azurestaticapps.net',
+        'http://localhost:3000',
+        'http://localhost:3001',
+        'http://localhost:5000'
+      ],
+        optionsSuccessStatus: 200
+};
 
+app.use(cors(corsOptions));
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
