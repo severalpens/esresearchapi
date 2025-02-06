@@ -11,10 +11,15 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
 const { Client } = require('@elastic/elasticsearch');
+
+const isLocalClient = false;
+const node = isLocalClient ? process.env.ELASTICSEARCH_DOCKER_URL: process.env.ELASTICSEARCH_URL;
+const apiKey = isLocalClient ? process.env.ELASTIC_DOCKER_API_KEY: process.env.ELASTIC_API_KEY;
+
 const client = new Client({
-    node: process.env.ELASTICSEARCH_URL,
+    node: node,
     auth: {
-        apiKey: process.env.ELASTIC_API_KEY
+        apiKey: apiKey
     }
 });
 
@@ -79,7 +84,6 @@ app.use(function(err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
-
   // render the error page
   res.status(err.status || 500);
   res.render('error');
