@@ -27,7 +27,6 @@ var app = express();
 const corsOptions = {
     origin: [
         'https://gray-smoke-064726800.4.azurestaticapps.net',
-        'http://localhost:3000',
         'http://localhost:3001',
         'http://localhost:5000'
       ],
