@@ -9,19 +9,8 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-
-const { Client } = require('@elastic/elasticsearch');
-
-const isLocalClient = false;
-const node = isLocalClient ? process.env.ELASTICSEARCH_DOCKER_URL: process.env.ELASTICSEARCH_URL;
-const apiKey = isLocalClient ? process.env.ELASTIC_DOCKER_API_KEY: process.env.ELASTIC_API_KEY;
-
-const client = new Client({
-    node: node,
-    auth: {
-        apiKey: apiKey
-    }
-});
+var apiRouter = require('./routes/api/index');
+var faqsRouter = require('./routes/api/faqs');
 
 var app = express();
 const corsOptions = {
@@ -46,41 +35,14 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/api', apiRouter);
+app.use('/api/faqs', faqsRouter);
 
 app.get('/test', async (req, res) => {
   const resp = await client.info();
   res.send('Express API is running');
 });
 
-app.get('/faqs', async (req, res) => {
-  const search = req.query.search;
-  let query = {};
-  let results = [];
-  if (search) {
-      const searchResult = await client.search({
-          index: 'faqs',
-          q: search
-      });
-      
-      results = searchResult.hits.hits.map(hit => {
-          return hit;
-      });
-  }else{
-      const allFaqs = await client.search({
-          index: 'faqs',
-          body: {
-              query: {
-                  match_all: {}
-              }
-          }
-      });
-      results = allFaqs.hits.hits.map(hit => {
-          return hit;
-      });
-  }
-
-  res.json(results);
-});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
