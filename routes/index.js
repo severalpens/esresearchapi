@@ -3,7 +3,7 @@ var router = express.Router();
 const { searchFaqs } = require('../services/elasticsearchService');
 
 /* GET home page. */
-router.get('/', async function(req, res, next) {
+router.get('/', async function(req, res) {
     try {
         const results = await searchFaqs();
         res.render('index', { faqs: results });

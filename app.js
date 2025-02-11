@@ -12,7 +12,7 @@ var usersRouter = require('./routes/users');
 var apiRouter = require('./routes/api/index');
 var faqsRouter = require('./routes/api/faqs');
 var embedRouter = require('./routes/api/embed');
-
+var createIndex = require('./routes/api/createIndex');
 var app = express();
 const corsOptions = {
     origin: [
@@ -39,9 +39,10 @@ app.use('/users', usersRouter);
 app.use('/api', apiRouter);
 app.use('/api/faqs', faqsRouter);
 app.use('/api/embed', embedRouter);
+app.use('/api/createIndex', createIndex);
 
 app.get('/test', async (req, res) => {
-  const resp = await client.info();
+  // const resp = await client.info();
   res.send('Express API is running');
 });
 
@@ -52,7 +53,7 @@ app.use(function(req, res, next) {
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function(err, req, res) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
