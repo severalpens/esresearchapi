@@ -11,6 +11,7 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var apiRouter = require('./routes/api/index');
 var faqsRouter = require('./routes/api/faqs');
+var embedRouter = require('./routes/api/embed');
 
 var app = express();
 const corsOptions = {
@@ -37,6 +38,7 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/api', apiRouter);
 app.use('/api/faqs', faqsRouter);
+app.use('/api/embed', embedRouter);
 
 app.get('/test', async (req, res) => {
   const resp = await client.info();
