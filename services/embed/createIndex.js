@@ -23,8 +23,8 @@ async function createStandardIndex(indexName,sourceData) {
         body: {
             mappings: {
                 properties: {
-                    question: { type: 'text' },
-                    answer: { type: 'text' }
+                    Question: { type: 'text' },
+                    Answer: { type: 'text' }
                 }
             }
         }
